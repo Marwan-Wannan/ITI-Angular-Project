@@ -1,59 +1,333 @@
-# AngularTest2
+<div align="center">
+  <img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="Angular Logo" width="120" height="120">
+  
+  # 🛋️ Furniture Store - Angular E-Commerce
+  
+  ### Modern Furniture Store built with Angular 18+ & DummyJSON API
+  
+  [![Angular](https://img.shields.io/badge/Angular-18+-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.dev)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.5+-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
+  [![DummyJSON](https://img.shields.io/badge/API-DummyJSON-success?style=for-the-badge)](https://dummyjson.com)
+  
+  [Live Demo](#) • [Features](#-features) • [Installation](#-quick-start) • [Documentation](#-documentation)
+  
+  **Read this in other languages**: [العربية](./README_AR.md)
+  
+</div>
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.2.
+---
 
-## Development server
+## 📋 Table of Contents
 
-To start a local development server, run:
+- [Overview](#-overview)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Quick Start](#-quick-start)
+- [Project Structure](#-project-structure)
+- [API Integration](#-api-integration)
+- [Screenshots](#-screenshots)
+- [Key Learnings](#-key-learnings)
+- [Documentation](#-documentation)
+- [Contributing](#-contributing)
+- [License](#-license)
 
+---
+
+## 🌟 Overview
+
+A **full-featured e-commerce application** for furniture shopping, built with **Angular 18+** and integrated with the **DummyJSON API**. This project demonstrates modern Angular development practices, including reactive forms, component-based architecture, HTTP client integration, and responsive design.
+
+### ✨ What Makes This Special?
+
+- 🎯 **Real API Integration**: Fetches furniture products from DummyJSON API
+- 📱 **Fully Responsive**: Works seamlessly on desktop, tablet, and mobile
+- 🔐 **Route Guards**: Protected admin routes
+- 📝 **Form Validation**: Reactive forms with custom validators
+- 🎨 **Modern UI/UX**: Beautiful interface with Bootstrap 5
+- 🔄 **CRUD Operations**: Complete Create, Read, Update, Delete functionality
+
+---
+
+## 🚀 Features
+
+### 🛍️ Customer Features
+- ✅ Browse furniture products with filtering
+- ✅ View detailed product information with images
+- ✅ Add products to shopping cart
+- ✅ Responsive product gallery with thumbnails
+- ✅ Real-time stock availability
+- ✅ Product search and filtering by category
+- ✅ Discount display and pricing
+
+### 👨‍💼 Admin Features
+- ✅ Add new furniture products
+- ✅ Edit existing products
+- ✅ Delete products with confirmation
+- ✅ Form validation and error handling
+- ✅ Image preview before upload
+
+### 🎯 Technical Features
+- ✅ RESTful API integration
+- ✅ RxJS for async operations
+- ✅ Reactive Forms with validation
+- ✅ Component-based architecture
+- ✅ Route guards and lazy loading
+- ✅ TypeScript strict mode
+- ✅ Clean code practices
+
+---
+
+## 🛠️ Tech Stack
+
+<table>
+  <tr>
+    <td align="center" width="96">
+      <img src="https://angular.io/assets/images/logos/angular/angular.svg" width="48" height="48" alt="Angular" />
+      <br>Angular 18+
+    </td>
+    <td align="center" width="96">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="48" height="48" alt="TypeScript" />
+      <br>TypeScript
+    </td>
+    <td align="center" width="96">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" width="48" height="48" alt="Bootstrap" />
+      <br>Bootstrap 5
+    </td>
+    <td align="center" width="96">
+      <img src="https://rxjs.dev/assets/images/logos/Rx_Logo_S.png" width="48" height="48" alt="RxJS" />
+      <br>RxJS
+    </td>
+    <td align="center" width="96">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" width="48" height="48" alt="SCSS" />
+      <br>SCSS
+    </td>
+  </tr>
+</table>
+
+### Core Technologies
+- **Framework**: Angular 18+
+- **Language**: TypeScript 5.5+
+- **Styling**: Bootstrap 5 + SCSS
+- **HTTP Client**: Angular HttpClient
+- **State Management**: RxJS Observables
+- **Forms**: Reactive Forms
+- **Routing**: Angular Router
+- **API**: DummyJSON REST API
+
+---
+
+## ⚡ Quick Start
+
+### Prerequisites
+
+Make sure you have the following installed:
+- **Node.js** (v18 or higher)
+- **npm** or **yarn**
+- **Angular CLI** (`npm install -g @angular/cli`)
+
+### Installation
+
+1️⃣ **Clone the repository**
 ```bash
+git clone https://github.com/Marwan-Wannan/ITI-Angular-Project.git
+cd ITI-Angular-Project
+```
+
+2️⃣ **Install dependencies**
+```bash
+npm install
+```
+
+3️⃣ **Start development server**
+```bash
+npm start
+# or
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+4️⃣ **Open your browser**
+```
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Build for Production
 
 ```bash
-ng generate --help
+npm run build
+# or
+ng build --configuration production
 ```
 
-## Building
+The build artifacts will be stored in the `dist/` directory.
 
-To build the project run:
+---
 
-```bash
-ng build
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── Components/
+│   │   ├── home/                 # Home page
+│   │   ├── product/              # Product listing
+│   │   ├── Product-details/      # Single product view
+│   │   ├── admin-product/        # Admin CRUD
+│   │   ├── parent-product/       # Shopping cart
+│   │   ├── navbar/               # Navigation
+│   │   └── footer/               # Footer
+│   ├── Services/
+│   │   ├── ProductService-With-API.service.ts    # API service
+│   │   ├── category.service.ts                   # Category service
+│   │   └── user-auth.service.ts                  # Auth service
+│   ├── Models/
+│   │   ├── iproduct.ts           # Product interface
+│   │   └── icategory.ts          # Category interface
+│   ├── Guard/
+│   │   └── route-guard.ts        # Route protection
+│   └── Pipes/
+│       └── discountprice.pipe.ts # Price calculation
+├── environments/
+│   ├── environment.ts
+│   └── environment.development.ts
+└── assets/                        # Static files
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🔌 API Integration
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+This project uses the **DummyJSON API** for product data.
 
-```bash
-ng test
+### Base URL
+```typescript
+https://dummyjson.com
 ```
 
-## Running end-to-end tests
+### Endpoints Used
 
-For end-to-end (e2e) testing, run:
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/products/category/furniture` | Get all furniture products |
+| GET | `/products/{id}` | Get single product details |
+| POST | `/products/add` | Add new product |
+| PUT | `/products/{id}` | Update product |
+| DELETE | `/products/{id}` | Delete product |
 
-```bash
-ng e2e
+### Example Response
+
+```json
+{
+  "products": [
+    {
+      "id": 6,
+      "title": "Wooden Dining Table",
+      "description": "Beautiful handcrafted table",
+      "price": 299.99,
+      "discountPercentage": 5.5,
+      "rating": 4.5,
+      "stock": 12,
+      "brand": "HomeStyle",
+      "category": "furniture",
+      "thumbnail": "https://...",
+      "images": ["..."]
+    }
+  ]
+}
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 📸 Screenshots
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+<div align="center">
+
+### Home Page
+*Modern landing page with hero section*
+
+### Product Listing
+*Browse furniture with filtering and search*
+
+### Product Details
+*Detailed view with image gallery and specifications*
+
+### Admin Panel
+*Add and manage products*
+
+</div>
+
+---
+
+## 💡 Key Learnings
+
+This project demonstrates proficiency in:
+
+- ✅ **Angular Framework**: Component lifecycle, services, dependency injection
+- ✅ **TypeScript**: Type safety, interfaces, generics
+- ✅ **RxJS**: Observables, operators, async data handling
+- ✅ **HTTP Client**: REST API integration, error handling
+- ✅ **Reactive Forms**: Form validation, custom validators
+- ✅ **Routing**: Navigation, route guards, lazy loading
+- ✅ **State Management**: Component communication, data flow
+- ✅ **Responsive Design**: Mobile-first approach with Bootstrap
+- ✅ **Clean Code**: Best practices, code organization
+
+---
+
+## 📚 Documentation
+
+For detailed documentation, check out:
+
+- [**PROJECT_UPDATES.md**](./PROJECT_UPDATES.md) - Complete change log and API details
+- [**PROJECT_UPDATES_AR.md**](./PROJECT_UPDATES_AR.md) - Arabic documentation
+- [**QUICK_START.md**](./QUICK_START.md) - Quick start guide
+- [**SUMMARY_AR.md**](./SUMMARY_AR.md) - Arabic summary
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👨‍💻 Author
+
+**Marwan Wannan**
+
+- GitHub: [@Marwan-Wannan](https://github.com/Marwan-Wannan)
+- LinkedIn: [Your LinkedIn](https://linkedin.com/in/your-profile)
+
+---
+
+## 🌟 Show Your Support
+
+Give a ⭐️ if you like this project!
+
+---
+
+## 📞 Contact
+
+Have questions or suggestions? Feel free to reach out!
+
+---
+
+<div align="center">
+  
+  **Made with ❤️ using Angular**
+  
+  [⬆ Back to Top](#-furniture-store---angular-e-commerce)
+  
+</div>
