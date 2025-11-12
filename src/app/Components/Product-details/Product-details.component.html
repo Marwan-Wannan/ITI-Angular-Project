@@ -1,0 +1,383 @@
+<div class="product-details-container">
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="loading-container d-flex justify-content-center align-items-center min-vh-100">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  }
+
+  <!-- Product Details Content -->
+  @if (!isLoading && product) {
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="py-3 bg-light">
+      <div class="container">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">
+            <a href="#" class="text-decoration-none" (click)="goBack()">Products</a>
+          </li>
+          <li class="breadcrumb-item">{{product.category || 'Furniture'}}</li>
+          <li class="breadcrumb-item active" aria-current="page">{{product.title}}</li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- Main Product Section -->
+    <section class="product-main py-5">
+      <div class="container">
+        <div class="row g-5">
+          <!-- Product Images -->
+          <div class="col-lg-6">
+            <div class="product-images">
+              <!-- Main Image -->
+              <div class="main-image-container position-relative mb-3">
+                <img [src]="selectedImage" [alt]="product.title" 
+                     class="img-fluid rounded-4 shadow main-image">
+                
+                <!-- Image Navigation Arrows -->
+                <button class="btn btn-primary btn-sm position-absolute top-50 start-0 translate-middle-y ms-3 image-nav"
+                        (click)="previousImage()">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="btn btn-primary btn-sm position-absolute top-50 end-0 translate-middle-y me-3 image-nav"
+                        (click)="nextImage()">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Zoom Icon -->
+                <div class="position-absolute top-0 end-0 m-3">
+                  <button class="btn btn-light btn-sm rounded-circle">
+                    <i class="fas fa-search-plus"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Thumbnail Images -->
+              <div class="thumbnail-images d-flex gap-2">
+                @for (image of productImages; track $index) {
+                  <img [src]="image" [alt]="product.title + ' view ' + ($index + 1)" 
+                       class="img-thumbnail cursor-pointer thumbnail-image"
+                       [class.active]="$index === currentImageIndex"
+                       (click)="changeImage($index)"
+                       style="width: 80px; height: 80px; object-fit: cover;">
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Information -->
+          <div class="col-lg-6">
+            <div class="product-info">
+              <!-- Product Title & Rating -->
+              <div class="product-header mb-4">
+                <h1 class="product-title h2 fw-bold mb-2">{{product.title}}</h1>
+                <div class="rating-section d-flex align-items-center mb-2">
+                  <div class="stars me-2">
+                    @for (star of getStars(getAverageRatingFloor()); track $index) {
+                      <i class="fas fa-star text-warning" *ngIf="star === 1"></i>
+                      <i class="far fa-star text-muted" *ngIf="star === 0"></i>
+                    }
+                  </div>
+                  <span class="rating-text text-muted">({{getAverageRating().toFixed(1)}} - {{customerReviews.length}} reviews)</span>
+                </div>
+                <p class="category-badge">
+                  <span class="badge bg-primary">{{product.category || 'Furniture'}}</span>
+                </p>
+              </div>
+
+              <!-- Price Section -->
+              <div class="price-section mb-4">
+                <div class="current-price h3 fw-bold text-primary mb-1">
+                  ${{product.price.toLocaleString()}}
+                </div>
+                @if (product.discountPercentage && product.discountPercentage > 0) {
+                  <div class="discount-info text-success">
+                    <i class="fas fa-tag me-1"></i>{{product.discountPercentage}}% OFF
+                  </div>
+                }
+                <div class="price-info text-muted small">
+                  <i class="fas fa-truck me-1"></i>{{product.shippingInformation || 'Free delivery on orders over $500'}}
+                </div>
+              </div>
+
+              <!-- Stock Status -->
+              <div class="stock-section mb-4">
+                @if (product.stock > 0) {
+                  <div class="alert alert-success py-2">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>{{product.availabilityStatus || 'In Stock'}}</strong> - {{product.stock}} available
+                  </div>
+                } @else {
+                  <div class="alert alert-danger py-2">
+                    <i class="fas fa-times-circle me-2"></i>
+                    <strong>Out of Stock</strong>
+                  </div>
+                }
+              </div>
+
+              <!-- Product Options -->
+              <div class="product-options mb-4">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Quantity:</label>
+                    <div class="quantity-selector d-flex">
+                      <button class="btn btn-outline-secondary" 
+                              (click)="selectedQuantity = selectedQuantity > 1 ? selectedQuantity - 1 : 1">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      <input type="number" class="form-control text-center mx-2" 
+                             [(ngModel)]="selectedQuantity" 
+                             [max]="product.stock" min="1" style="width: 80px;">
+                      <button class="btn btn-outline-secondary" 
+                              (click)="selectedQuantity = selectedQuantity < product.stock ? selectedQuantity + 1 : product.stock">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold">Brand:</label>
+                    <p class="mb-0 text-muted">{{product.brand || 'Premium Quality'}}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="action-buttons mb-4">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <button class="btn btn-primary btn-lg w-100 rounded-pill" 
+                            (click)="addToCart()" 
+                            [disabled]="product.stock === 0">
+                      <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                    </button>
+                  </div>
+                  <div class="col-md-6">
+                    <button class="btn btn-success btn-lg w-100 rounded-pill" 
+                            (click)="buyNow()" 
+                            [disabled]="product.stock === 0">
+                      <i class="fas fa-bolt me-2"></i>Buy Now
+                    </button>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-outline-danger w-100 rounded-pill" (click)="addToWishlist()">
+                      <i class="far fa-heart me-2"></i>Add to Wishlist
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Info -->
+              <div class="quick-info">
+                <div class="row g-3 text-center">
+                  <div class="col-4">
+                    <div class="info-item p-3 bg-light rounded-3">
+                      <i class="fas fa-shield-alt text-primary fs-4 mb-2"></i>
+                      <div class="small fw-semibold">2 Year Warranty</div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="info-item p-3 bg-light rounded-3">
+                      <i class="fas fa-undo text-success fs-4 mb-2"></i>
+                      <div class="small fw-semibold">30 Days Return</div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="info-item p-3 bg-light rounded-3">
+                      <i class="fas fa-headset text-warning fs-4 mb-2"></i>
+                      <div class="small fw-semibold">24/7 Support</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Details Tabs -->
+    <section class="product-tabs py-5 bg-light">
+      <div class="container">
+        <!-- Tab Navigation -->
+        <ul class="nav nav-pills nav-justified mb-4" id="productTabs">
+          <li class="nav-item">
+            <button class="nav-link fw-semibold" 
+                    [class.active]="activeTab === 'description'"
+                    (click)="setActiveTab('description')">
+              <i class="fas fa-info-circle me-2"></i>Description
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link fw-semibold" 
+                    [class.active]="activeTab === 'specifications'"
+                    (click)="setActiveTab('specifications')">
+              <i class="fas fa-list me-2"></i>Specifications
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link fw-semibold" 
+                    [class.active]="activeTab === 'reviews'"
+                    (click)="setActiveTab('reviews')">
+              <i class="fas fa-star me-2"></i>Reviews ({{customerReviews.length}})
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content bg-white rounded-4 shadow-sm p-4">
+          <!-- Description Tab -->
+          @if (activeTab === 'description') {
+            <div class="tab-pane-content">
+              <h4 class="mb-3">Product Description</h4>
+              <p class="lead text-muted mb-4">
+                {{product.description || 'Experience the perfect blend of style and functionality with this premium furniture piece. Crafted with attention to detail, this piece is designed to enhance any space while providing lasting durability and comfort.'}}
+              </p>
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <h5>Key Features:</h5>
+                  <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Premium quality construction</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Modern and timeless design</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>{{product.warrantyInformation || 'Quality guaranteed'}}</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>{{product.returnPolicy || '30-day return policy'}}</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h5>Care Instructions:</h5>
+                  <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-info-circle text-info me-2"></i>Clean with mild soap and water</li>
+                    <li class="mb-2"><i class="fas fa-info-circle text-info me-2"></i>Avoid harsh chemicals</li>
+                    <li class="mb-2"><i class="fas fa-info-circle text-info me-2"></i>Use coasters for hot items</li>
+                    <li class="mb-2"><i class="fas fa-info-circle text-info me-2"></i>Regular dusting recommended</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          }
+
+          <!-- Specifications Tab -->
+          @if (activeTab === 'specifications') {
+            <div class="tab-pane-content">
+              <h4 class="mb-3">Technical Specifications</h4>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <tbody>
+                    @for (spec of specifications; track $index) {
+                      <tr>
+                        <td class="fw-semibold" style="width: 30%;">{{spec.label}}</td>
+                        <td>{{spec.value}}</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          }
+
+          <!-- Reviews Tab -->
+          @if (activeTab === 'reviews') {
+            <div class="tab-pane-content">
+              <div class="reviews-header d-flex justify-content-between align-items-center mb-4">
+                <h4 class="mb-0">Customer Reviews</h4>
+                <div class="overall-rating text-center">
+                  <div class="rating-stars mb-1">
+                    @for (star of getStars(getAverageRatingFloor()); track $index) {
+                      <i class="fas fa-star text-warning fs-5" *ngIf="star === 1"></i>
+                      <i class="far fa-star text-muted fs-5" *ngIf="star === 0"></i>
+                    }
+                  </div>
+                  <div class="rating-text">{{getAverageRating().toFixed(1)}} out of 5</div>
+                </div>
+              </div>
+
+              <!-- Individual Reviews -->
+              <div class="reviews-list">
+                @for (review of customerReviews; track $index) {
+                  <div class="review-item border-bottom pb-4 mb-4">
+                    <div class="review-header d-flex justify-content-between align-items-start mb-2">
+                      <div class="reviewer-info">
+                        <h6 class="mb-1">
+                          {{review.name}}
+                          @if (review.verified) {
+                            <span class="badge bg-success ms-2">Verified Purchase</span>
+                          }
+                        </h6>
+                        <div class="review-stars mb-1">
+                          @for (star of getStars(review.rating); track $index) {
+                            <i class="fas fa-star text-warning" *ngIf="star === 1"></i>
+                            <i class="far fa-star text-muted" *ngIf="star === 0"></i>
+                          }
+                        </div>
+                      </div>
+                      <small class="text-muted">{{review.date | date}}</small>
+                    </div>
+                    <p class="review-comment mb-2">{{review.comment}}</p>
+                    <div class="review-actions">
+                      <button class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-thumbs-up me-1"></i>Helpful ({{review.helpful}})
+                      </button>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <!-- Write Review Button -->
+              <div class="text-center mt-4">
+                <button class="btn btn-primary btn-lg rounded-pill">
+                  <i class="fas fa-edit me-2"></i>Write a Review
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="navigation-buttons d-flex justify-content-around mt-4">
+      <button class="btn btn-danger" (click)="previousProduct()">Previous Product</button>
+      <button class="btn btn-success" (click)="nextProduct()">Next Product</button>
+
+      </div>
+    </section>
+
+    <!-- Related Products -->
+    @if (relatedProducts.length > 0) {
+      <section class="related-products py-5">
+        <div class="container">
+          <h3 class="mb-4 text-center">You Might Also Like</h3>
+          <div class="row g-4">
+            @for (relatedProduct of relatedProducts; track relatedProduct.id) {
+              <div class="col-lg-3 col-md-6">
+                <div class="product-card h-100 bg-white rounded-4 shadow-sm hover-lift cursor-pointer"
+                     (click)="viewRelatedProduct(relatedProduct.id)">
+                  <img [src]="relatedProduct.thumbnail" [alt]="relatedProduct.title" 
+                       class="card-img-top rounded-top-4" style="height: 200px; object-fit: cover;">
+                  <div class="card-body p-3">
+                    <h6 class="card-title mb-2">{{relatedProduct.title}}</h6>
+                    <p class="card-text text-muted small mb-2">{{relatedProduct.category || 'Furniture'}}</p>
+                    <div class="price-section">
+                      <span class="h6 text-primary fw-bold">${{relatedProduct.price.toLocaleString()}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </section>
+    }
+  }
+
+  <!-- Product Not Found -->
+  @if (!isLoading && !product) {
+    <div class="not-found-container d-flex flex-column justify-content-center align-items-center min-vh-100">
+      <i class="fas fa-exclamation-triangle text-warning fs-1 mb-3"></i>
+      <h2 class="mb-3">Product Not Found</h2>
+      <p class="text-muted mb-4">The product you're looking for doesn't exist or has been removed.</p>
+      <button class="btn btn-primary btn-lg rounded-pill" (click)="goBack()">
+        <i class="fas fa-arrow-left me-2"></i>Back to Products
+      </button>
+    </div>
+  }
+</div>

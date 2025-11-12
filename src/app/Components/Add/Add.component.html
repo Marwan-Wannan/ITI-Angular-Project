@@ -1,0 +1,121 @@
+
+<!-- Updated to match DummyJSON API structure -->
+  <div class="card mb-5 pt-5 mt-5">
+  <div class="card-header">
+    Add Product with template
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="addProduct()" #form1="ngForm">
+      <div class="form-group row mb-2">
+        <label for="ProductName" class="col-md-2 col-form-label">Product Title</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="ProductName" placeholder="Product Title (required)" required
+            minlength="3" [(ngModel)]="product.title" name="ProductName" #ProductNameIn="ngModel"
+            [ngClass]="{'is-invalid':(ProductNameIn.touched || ProductNameIn.dirty)&&ProductNameIn.invalid}">
+
+          <div class="invalid-feedback">
+            @if(ProductNameIn.errors?.['required']){
+            Product title is required
+            }
+            @if (ProductNameIn.errors?.['minlength']) {
+            Product title must be at least 3 characters
+            }
+
+          </div>
+
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="ProductQuantity">Stock</label>
+        <div class="col-md-8">
+          <input class="form-control" id="ProductQuantity" type="number" placeholder="Stock (required)" required
+            [(ngModel)]="product.stock" name="ProductQuantity" #ProductQuantityIn="ngModel"
+            [ngClass]="{'is-invalid':(ProductQuantityIn.touched || ProductQuantityIn.dirty)&&ProductQuantityIn.invalid}">
+
+          <div class="invalid-feedback">
+            @if(ProductQuantityIn.errors?.['required']){
+            Stock is required
+            }
+            @if (ProductQuantityIn.errors?.['min']) {
+            Stock must be at least 1
+            }
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="ProductPrice">Product Price</label>
+        <div class="col-md-8">
+          <input class="form-control" id="ProductPrice" type="number" placeholder="Product Price (required)" required
+            [(ngModel)]="product.price" name="ProductPrice" #ProductPriceIn="ngModel"
+            [ngClass]="{'is-invalid':(ProductPriceIn.touched || ProductPriceIn.dirty)&&ProductPriceIn.invalid}"/>
+
+          <div class="invalid-feedback">
+            @if(ProductPriceIn.errors?.['required']){
+            Product price is required
+            }
+            @if (ProductPriceIn.errors?.['min']) {
+            Product price must be a positive number
+            }
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="Description">Description</label>
+        <div class="col-md-8">
+          <textarea class="form-control" id="Description" required
+            [(ngModel)]="product.description" name="Description" #DescriptionIn="ngModel"
+            [ngClass]="{'is-invalid':(DescriptionIn.touched || DescriptionIn.dirty)&&DescriptionIn.invalid}"
+            rows="3" placeholder="Product Description"></textarea>
+
+          <div class="invalid-feedback">
+            @if(DescriptionIn.errors?.['required']){
+            Description is required
+            }
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="ProductCategory">Category</label>
+        <div class="col-md-8">
+          <input class="form-control" id="ProductCategory" type="text" required
+            [(ngModel)]="product.category" name="ProductCategory" #ProductCategoryIn="ngModel"
+            [ngClass]="{'is-invalid':(ProductCategoryIn.touched || ProductCategoryIn.dirty)&&ProductCategoryIn.invalid}"
+            value="furniture" placeholder="furniture">
+
+          <div class="invalid-feedback">
+            @if(ProductCategoryIn.errors?.['required']){
+            Category is required
+            }
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="ProductImage">Product Image URL</label>
+        <div class="col-md-8">
+          <input class="form-control" id="ProductImage" type="url" 
+            [(ngModel)]="product.thumbnail" name="ProductImage" placeholder="https://..." />
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="form1.invalid">Submit</button>
+
+    </form>
+  </div>
+</div>
+
+<!-- <h3>{{user|json}}</h3> -->
+<!-- <h3>{{firstNameIn.className|json}}</h3> -->
+<!-- <h3>{{firstNameIn.errors|json}}</h3> -->
+<!-- <h3>{{form1.value|json}}</h3> -->

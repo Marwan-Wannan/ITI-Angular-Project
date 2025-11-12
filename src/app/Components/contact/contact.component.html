@@ -1,0 +1,251 @@
+<div class="contact-container">
+  <!-- Hero Section -->
+  <section class="contact-hero text-white py-5">
+    <div class="container">
+      <div class="row text-center align-items-center min-vh-50">
+        <div class="col-12">
+          <h1 class="display-3 fw-bold mb-4 animate-fadeIn">Get In Touch</h1>
+          <p class="lead mb-4 animate-fadeIn-delay">
+            We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+          </p>
+          <div class="hero-decoration">
+            <i class="bi bi-envelope-heart display-1 text-warning opacity-75"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Info Cards -->
+  <section class="contact-info py-5 bg-light">
+    <div class="container">
+      <div class="row g-4">
+        @for (info of contactInfo; track $index) {
+          <div class="col-lg-4 col-md-6">
+            <div class="contact-card text-center p-4 bg-white rounded-4 shadow-sm h-100 hover-lift">
+              <div class="contact-icon mb-3">
+                <i class="{{info.icon}} {{info.color}} fs-1"></i>
+              </div>
+              <h5 class="fw-bold mb-3">{{info.title}}</h5>
+              @for (detail of info.details; track $index) {
+                <p class="text-muted mb-1">{{detail}}</p>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form & Map -->
+  <section class="contact-form-section py-5">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Contact Form -->
+        <div class="col-lg-6">
+          <div class="contact-form-wrapper">
+            <h2 class="h3 fw-bold mb-4">Send Us a Message</h2>
+            <form #contactFormRef="ngForm" (ngSubmit)="onSubmit()" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="name" class="form-label fw-semibold">Full Name *</label>
+                  <input 
+                    type="text" 
+                    id="name"
+                    name="name"
+                    class="form-control form-control-lg" 
+                    [(ngModel)]="contactForm.name"
+                    required
+                    placeholder="Your full name">
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label fw-semibold">Email Address *</label>
+                  <input 
+                    type="email" 
+                    id="email"
+                    name="email"
+                    class="form-control form-control-lg" 
+                    [(ngModel)]="contactForm.email"
+                    required
+                    placeholder="your@email.com">
+                </div>
+                <div class="col-md-6">
+                  <label for="phone" class="form-label fw-semibold">Phone Number</label>
+                  <input 
+                    type="tel" 
+                    id="phone"
+                    name="phone"
+                    class="form-control form-control-lg" 
+                    [(ngModel)]="contactForm.phone"
+                    placeholder="+1 (555) 123-4567">
+                </div>
+                <div class="col-md-6">
+                  <label for="subject" class="form-label fw-semibold">Subject *</label>
+                  <select 
+                    id="subject"
+                    name="subject"
+                    class="form-select form-select-lg" 
+                    [(ngModel)]="contactForm.subject"
+                    required>
+                    <option value="">Select a subject</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="sales">Sales Question</option>
+                    <option value="support">Customer Support</option>
+                    <option value="custom">Custom Furniture</option>
+                    <option value="complaint">Complaint</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label for="message" class="form-label fw-semibold">Message *</label>
+                  <textarea 
+                    id="message"
+                    name="message"
+                    class="form-control form-control-lg" 
+                    rows="6" 
+                    [(ngModel)]="contactForm.message"
+                    required
+                    placeholder="Tell us how we can help you..."></textarea>
+                </div>
+                <div class="col-12">
+                  <button 
+                    type="submit" 
+                    class="btn btn-primary btn-lg px-5 py-3 rounded-pill"
+                    [disabled]="!isFormValid()">
+                    <i class="bi bi-send me-2"></i>Send Message
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Map & Additional Info -->
+        <div class="col-lg-6">
+          <div class="map-wrapper mb-4">
+            <h2 class="h3 fw-bold mb-4">Find Our Showroom</h2>
+            <div class="map-placeholder bg-light rounded-4 d-flex align-items-center justify-content-center"
+                 style="height: 300px;">
+              <div class="text-center text-muted">
+                <i class="bi bi-geo-alt fs-1 mb-3 d-block"></i>
+                <h5>Interactive Map</h5>
+                <p class="mb-0">123 Furniture Street, Design District, NY 10001</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Business Hours -->
+          <div class="business-hours bg-white p-4 rounded-4 shadow-sm">
+            <h4 class="fw-bold mb-3">
+              <i class="bi bi-clock text-primary me-2"></i>Business Hours
+            </h4>
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Monday:</span>
+                  <span class="text-muted">9:00 AM - 7:00 PM</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Tuesday:</span>
+                  <span class="text-muted">9:00 AM - 7:00 PM</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Wednesday:</span>
+                  <span class="text-muted">9:00 AM - 7:00 PM</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Thursday:</span>
+                  <span class="text-muted">9:00 AM - 7:00 PM</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Friday:</span>
+                  <span class="text-muted">9:00 AM - 8:00 PM</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Saturday:</span>
+                  <span class="text-muted">10:00 AM - 6:00 PM</span>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold text-danger">Sunday:</span>
+                  <span class="text-danger">Closed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">Frequently Asked Questions</h2>
+            <p class="lead text-muted">Find answers to commonly asked questions</p>
+          </div>
+          
+          <div class="faq-accordion">
+            @for (faq of faqItems; track $index) {
+              <div class="faq-item mb-3">
+                <div class="faq-question bg-white rounded-4 shadow-sm border-0">
+                  <button 
+                    class="btn btn-link w-100 text-start p-4 text-decoration-none collapsed"
+                    [class.collapsed]="!faq.isOpen"
+                    (click)="toggleFaq($index)">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <h6 class="mb-0 fw-semibold text-dark">{{faq.question}}</h6>
+                      <i class="bi" 
+                         [class.bi-chevron-down]="!faq.isOpen"
+                         [class.bi-chevron-up]="faq.isOpen"></i>
+                    </div>
+                  </button>
+                  @if (faq.isOpen) {
+                    <div class="faq-answer px-4 pb-4">
+                      <p class="text-muted mb-0">{{faq.answer}}</p>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Media Section -->
+  <section class="social-section py-5 bg-dark text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-12">
+          <h2 class="h3 fw-bold mb-4">Follow Us on Social Media</h2>
+          <p class="lead mb-4">Stay connected and get inspired with our latest designs</p>
+          <div class="social-links">
+            @for (social of socialLinks; track $index) {
+              <a [href]="social.url" 
+                 class="btn btn-outline-light btn-lg rounded-circle me-3 mb-3 social-btn"
+                 [style.border-color]="social.color"
+                 [attr.title]="social.name">
+                <i class="{{social.icon}}"></i>
+              </a>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

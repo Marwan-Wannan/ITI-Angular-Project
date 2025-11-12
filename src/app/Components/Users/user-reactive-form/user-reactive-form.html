@@ -1,0 +1,234 @@
+<div class="container py-5 pt-5 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header bg-primary text-white text-center py-4">
+          <h3 class="mb-0 fw-bold">
+            <i class="bi bi-person-plus me-2"></i>
+            User Registration
+          </h3>
+          <p class="mb-0 opacity-75">Create your account with us</p>
+        </div>
+        
+        <div class="card-body p-4">
+          @if (submitMessage) {
+            <div class="alert alert-{{submitMessageType}} alert-dismissible fade show" role="alert">
+              <i class="bi bi-{{submitMessageType === 'success' ? 'check-circle' : 'exclamation-triangle'}} me-2"></i>
+              {{submitMessage}}
+              <button type="button" class="btn-close" (click)="submitMessage = ''" aria-label="Close"></button>
+            </div>
+          }
+
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            
+            <div class="mb-4">
+              <label for="fullName" class="form-label fw-bold">
+                <i class="bi bi-person me-1"></i>Full Name *
+              </label>
+              <input 
+                type="text" 
+                id="fullName"
+                class="form-control form-control-lg"
+                [class.is-valid]="isFieldValid('fullName')"
+                [class.is-invalid]="(fullName?.touched || fullName?.dirty) && fullName?.invalid"
+                placeholder="Enter your full name (minimum 5 characters)"
+                formControlName="fullName">
+              
+              @if (hasError('fullName', 'required')) {
+                <div class="alert alert-danger mt-2 py-2">
+                  <i class="bi bi-exclamation-circle me-1"></i>
+                  Full name is required
+                </div>
+              }
+              @if (hasError('fullName', 'minlength')) {
+                <div class="alert alert-warning mt-2 py-2">
+                  <i class="bi bi-info-circle me-1"></i>
+                  Full name must be at least 5 characters long
+                </div>
+              }
+              @if (isFieldValid('fullName')) {
+                <div class="valid-feedback">
+                  <i class="bi bi-check-circle me-1"></i>
+                  Looks good!
+                </div>
+              }
+            </div>
+            <!-- checking if email is already taken -->
+            <div class="mb-4">
+              <label for="email" class="form-label fw-bold">
+                <i class="bi bi-envelope me-1"></i>Email Address *
+              </label>
+              <input 
+                type="email" 
+                id="email"
+                class="form-control form-control-lg"
+                [class.is-valid]="isFieldValid('email')"
+                [class.is-invalid]="(email?.touched || email?.dirty) && email?.invalid"
+                placeholder="Enter your email address"
+                formControlName="email">
+              
+              @if (hasError('email', 'required')) {
+                <div class="alert alert-danger mt-2 py-2">
+                  <i class="bi bi-exclamation-circle me-1"></i>
+                  Email address is required
+                </div>
+              }
+              @if (hasError('email', 'email')) {
+                <div class="alert alert-warning mt-2 py-2">
+                  <i class="bi bi-info-circle me-1"></i>
+                  Please enter a valid email address
+                </div>
+              }
+              @if (isFieldValid('email')) {
+                <div class="valid-feedback">
+                  <i class="bi bi-check-circle me-1"></i>
+                  Valid email address!
+                </div>
+              }
+              <!-- @if (emailTaken('email')) {
+                <div class="alert alert-danger mt-2 py-2">
+                  <i class="bi bi-exclamation-circle me-1"></i>
+                  This email is already taken. Please use a different one.
+                </div>
+              } -->
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold">
+                <i class="bi bi-phone me-1"></i>Mobile Number(s) *
+              </label>
+              
+              <div formArrayName="mobileNumbers">
+                @for (control of mobileNumbers.controls; track $index) {
+                  <div class="input-group mb-3">
+                    <span class="input-group-text">
+                      <i class="bi bi-phone"></i>
+                    </span>
+                    <input 
+                      type="tel" 
+                      class="form-control form-control-lg"
+                      [class.is-valid]="isMobileFieldValid($index)"
+                      [class.is-invalid]="(getMobileControl($index).touched || getMobileControl($index).dirty) && getMobileControl($index).invalid"
+                      [placeholder]="$index === 0 ? 'Primary mobile number' : 'Additional mobile number'"
+                      [formControlName]="$index">
+                    
+                    @if ($index > 0) {
+                      <button 
+                        type="button" 
+                        class="btn btn-outline-danger"
+                        (click)="removeMobileNumber($index)"
+                        title="Remove this mobile number">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    }
+                  </div>
+                  
+                  @if (hasMobileError($index, 'required')) {
+                    <div class="alert alert-danger mb-3 py-2">
+                      <i class="bi bi-exclamation-circle me-1"></i>
+                      Mobile number is required
+                    </div>
+                  }
+                  @if (hasMobileError($index, 'pattern')) {
+                    <div class="alert alert-warning mb-3 py-2">
+                      <i class="bi bi-info-circle me-1"></i>
+                      Please enter a valid mobile number (10-15 digits)
+                    </div>
+                  }
+                  @if (isMobileFieldValid($index)) {
+                    <div class="alert alert-success mb-3 py-2">
+                      <i class="bi bi-check-circle me-1"></i>
+                      Valid mobile number!
+                    </div>
+                  }
+                }
+              </div>
+              
+              <button 
+                type="button" 
+                class="btn btn-outline-primary btn-sm"
+                (click)="addMobileNumber()">
+                <i class="bi bi-plus-circle me-1"></i>
+                Add Another Mobile Number
+              </button>
+            </div>
+
+            <div class="mb-4">
+              <label for="password" class="form-label fw-bold">
+                <i class="bi bi-lock me-1"></i>Password *
+              </label>
+              <input 
+                type="password" 
+                id="password"
+                class="form-control form-control-lg"
+                [class.is-valid]="isFieldValid('password')"
+                [class.is-invalid]="(password?.touched || password?.dirty) && password?.invalid"
+                placeholder="Enter your password (minimum 6 characters)"
+                formControlName="password">
+              
+              @if (hasError('password', 'required')) {
+                <div class="alert alert-danger mt-2 py-2">
+                  <i class="bi bi-exclamation-circle me-1"></i>
+                  Password is required
+                </div>
+              }
+              @if (hasError('password', 'minlength')) {
+                <div class="alert alert-warning mt-2 py-2">
+                  <i class="bi bi-info-circle me-1"></i>
+                  Password must be at least 6 characters long
+                </div>
+              }
+              @if (isFieldValid('password')) {
+                <div class="valid-feedback">
+                  <i class="bi bi-check-circle me-1"></i>
+                  Strong password!
+                </div>
+              }
+            </div>
+
+            <div class="d-grid gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-lg"
+                [disabled]="userForm.invalid || isSubmitting">
+                @if (isSubmitting) {
+                  <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Registering...
+                } @else {
+                  <i class="bi bi-person-check me-2"></i>
+                  Register Account
+                }
+              </button>
+              
+              @if (userForm.invalid && (userForm.touched || userForm.dirty)) {
+                <small class="text-danger text-center">
+                  <i class="bi bi-exclamation-triangle me-1"></i>
+                  Please fix the errors above before submitting
+                </small>
+              }
+            </div>
+
+            <!-- already registered -->
+            <div class="alert alert-info mt-4">
+              <i class="bi bi-info-circle me-1"></i>
+              Already have an account? <button class="btn btn-link" (click)="navigateToLogin()">Login here</button>
+            </div>
+
+          </form>
+        </div>
+        
+        <div class="card-footer bg-light">
+          <details>
+            <summary class="text-muted small">Debug Info (Development Only)</summary>
+            <pre class="small mt-2">{{userForm.value | json}}</pre>
+            <div class="small text-muted mt-1">
+              Form Valid: {{userForm.valid}} | Form Touched: {{userForm.touched}}
+            </div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+

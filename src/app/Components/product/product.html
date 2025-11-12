@@ -1,0 +1,225 @@
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center min-vh-100">
+      <div class="col-lg-6">
+        <div class="hero-content text-white">
+          <h1 class="hero-title">Premium Furniture Collection</h1>
+          <p class="hero-subtitle">Discover our handcrafted furniture designed to transform your living spaces with
+            elegance and comfort.</p>
+
+          @if (Discount !== 'No Discount') {
+          <div class="discount-banner mb-4">
+            <div class="discount-badge">
+              <i class="bi bi-percent me-2"></i>
+              Special Offer: {{Discount}} OFF
+            </div>
+          </div>
+          }
+
+          <div class="hero-stats row text-center mt-4">
+            <div class="col-4">
+              <div class="stat-item">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Products</span>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="stat-item">
+                <span class="stat-number">15k+</span>
+                <span class="stat-label">Happy Customers</span>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="stat-item">
+                <span class="stat-number">98%</span>
+                <span class="stat-label">Satisfaction</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="hero-image text-center">
+          @if (flagLogo) {
+          <img [src]="store.Logo" alt="Store Logo" class="store-logo mb-3">
+          }
+          <div class="floating-elements">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="filter-section py-4 bg-light">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2 class="section-title mb-0">Browse Our Collection</h2>
+      </div>
+      <div class="col-md-6">
+        <div class="filter-container">
+          <label for="categoryFilter" class="form-label fw-bold">Filter by Category:</label>
+          <select id="categoryFilter" class="form-select modern-select" [(ngModel)]="filterCategoryID">
+            @for (cat of Categories; track cat.ID) {
+            <option [value]="cat.ID">{{cat.Name}}</option>
+            }
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="products-section py-5">
+  <div class="container">
+    <div class="row">
+      @for (prd of filteredProducts; track prd.id) {
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="product-card">
+          <div class="product-image">
+            <img [src]="prd.thumbnail" alt="{{prd.title}}" class="product-img">
+
+
+            <div class="product-badges">
+              @if (prd.stock === 0) {
+              <span class="badge badge-danger">
+                <i class="bi bi-x-circle me-1"></i>Out of Stock
+              </span>
+              } @else if (prd.stock === 1) {
+              <span class="badge badge-warning">
+                <i class="bi bi-exclamation-triangle me-1"></i>Last Item
+              </span>
+              } @else if (prd.stock === 2) {
+              <span class="badge badge-info">
+                <i class="bi bi-info-circle me-1"></i>Last 2 Items
+              </span>
+              } @else {
+              <span class="badge badge-success">
+                <i class="bi bi-check-circle me-1"></i>In Stock
+              </span>
+              }
+              <span class="badge badge-edit" (click)="editProduct(prd)">
+                <i class="bi bi-pencil me-1"></i>Edit
+              </span>
+
+              <span class="badge badge-delete" (click)="deleteProduct(prd)">
+                <i class="bi bi-trash me-1"></i>Delete
+              </span>
+            </div>
+
+
+              
+              
+           
+
+          </div>
+
+          <div class="product-info">
+            <h5 class="product-title mb-2">{{prd.title}}</h5>
+
+            <p class="product-material mb-3">
+              <i class="bi bi-tags me-1"></i>{{prd.category || 'Furniture'}}
+            </p>
+
+            <div class="price-section mb-3">
+              @if (prd.discountPercentage && prd.discountPercentage > 0) {
+              <div class="price-original">
+                ${{prd.price.toLocaleString()}}
+              </div>
+              <div class="price-discounted">
+                ${{(prd.price * (1 - prd.discountPercentage / 100)).toFixed(2)}}
+              </div>
+              <div class="savings-badge">
+                Save {{prd.discountPercentage}}%
+              </div>
+              } @else {
+              <div class="price-current">
+                ${{prd.price.toLocaleString()}}
+              </div>
+              }
+            </div>
+
+
+            <div class="stock-status mb-3">
+              @switch(prd.stock) {
+              @case (0) {
+              <div class="status-indicator status-out-of-stock">
+                <i class="bi bi-x-circle me-2"></i>
+                <span>Out of Stock</span>
+              </div>
+              }
+              @default {
+              <div class="status-indicator status-in-stock">
+                <i class="bi bi-check-circle me-2"></i>
+                <span>{{prd.stock}} Available</span>
+              </div>
+              }
+              }
+            </div>
+
+
+            <div class="product-actions">
+              <button class="btn-add-cart" (click)="addTocart(prd); prd.stock = prd.stock - 1"
+                [disabled]="prd.stock < 1" [class.disabled]="prd.stock < 1">
+                <i class="bi bi-cart-plus me-2"></i>
+                @if (prd.stock < 1) { Notify Me } @else { Add to Cart } </button>
+
+                  <button class="btn-view-details" [routerLink]="['/Product', prd.id]">
+                    <i class="bi bi-eye me-2"></i>
+                    View Details
+                  </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="features-section py-5 bg-primary text-white">
+  <div class="container">
+    <div class="row text-center g-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-item">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-truck display-4"></i>
+          </div>
+          <h5 class="fw-bold">Free Delivery</h5>
+          <p class="mb-0">On orders over $500</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-item">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-shield-check display-4"></i>
+          </div>
+          <h5 class="fw-bold">2 Year Warranty</h5>
+          <p class="mb-0">Quality guaranteed</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-item">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-arrow-clockwise display-4"></i>
+          </div>
+          <h5 class="fw-bold">Easy Returns</h5>
+          <p class="mb-0">30-day return policy</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-item">
+          <div class="feature-icon mb-3">
+            <i class="bi bi-headset display-4"></i>
+          </div>
+          <h5 class="fw-bold">24/7 Support</h5>
+          <p class="mb-0">Always here to help</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

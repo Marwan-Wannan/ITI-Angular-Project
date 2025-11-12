@@ -1,0 +1,43 @@
+<div class="parent container mt-5 pt-5">
+    <!-- <label for="categoryFilter" class="form-label h5 text-primary">Filter by Category:</label>
+    <select id="categoryFilter" class="form-select form-select-lg shadow-sm" [(ngModel)]="filterCategoryID">
+        @for (cat of Categories; track cat.ID) {
+        <option [value]="cat.ID">{{cat.Name}}</option>
+        }
+    </select> -->
+
+    <table class="table table-striped table-hover mt-4 shadow-sm CheckOut-Cart">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total Item price</th>
+                <th scope="col">Purchase Date</th>
+            </tr>
+            @if (cartItems.length === 0) {
+            <tr>
+                <td colspan="5" class="text-center">Your cart is empty</td>
+            </tr>
+            }
+            @for(item of cartItems;track item.Product.id) {
+            <!-- check if item is in cart add one to the quantity -->
+    
+                <tr>
+                    <td>{{item.Product.title}}</td>
+                    <td>{{item.Product.price}}</td>
+                    <td>{{item.Quantity}}</td>
+                    <td>{{item.Product.price * item.Quantity}}</td>
+                    <td>{{item.PurchaseDate | date:'short'}}</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="3" class="text-end fw-bold">Total Price:</td>
+                <td class="fw-bold" colspan="2"> {{TotalPrice|currency:'USD'}} </td>
+            </tr>
+            
+        </thead>
+
+    </table>
+</div>
+<app-products class="d-none" [filterValueInChild]="filterCategoryID" (addtocartevent)="cart($event)"></app-products>

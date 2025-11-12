@@ -1,0 +1,147 @@
+<div class="not-found-container">
+    <!-- Main 404 Section -->
+
+    <body class="bg-purple">
+
+        <div class="stars">
+            <div class="central-body">
+                <img class="image-404" src="http://salehriaz.com/404Page/img/404.svg" width="300px">
+                <div class="error-actions mb-5 pt-5">
+                    <button class="btn btn-primary btn-lg px-4 py-3 me-3 rounded-pill" (click)="goHome()">
+                        <i class="bi bi-house-door me-2"></i>Go Home
+                    </button>
+                    <button class="btn btn-outline-secondary btn-lg px-4 py-3 rounded-pill" (click)="goBack()">
+                        <i class="bi bi-arrow-left me-2"></i>Go Back
+                    </button>
+                </div>
+            </div>
+            <div class="objects">
+                <img class="object_rocket" src="http://salehriaz.com/404Page/img/rocket.svg" width="40px">
+                <div class="earth-moon">
+                    <img class="object_earth" src="http://salehriaz.com/404Page/img/earth.svg" width="100px">
+                    <img class="object_moon" src="http://salehriaz.com/404Page/img/moon.svg" width="80px">
+                </div>
+                <div class="box_astronaut">
+                    <img class="object_astronaut" src="http://salehriaz.com/404Page/img/astronaut.svg" width="140px">
+                </div>
+            </div>
+            <div class="glowing_stars">
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+
+            </div>
+
+        </div>
+
+
+
+    </body>
+
+    <!-- Popular Routes Section -->
+    <section class="popular-routes py-5 bg-light">
+        <div class="container">
+            <div class="row text-center mb-4">
+                <div class="col-12">
+                    <h2 class="h3 fw-bold mb-3">Maybe you're looking for one of these?</h2>
+                    <p class="text-muted">Here are some popular pages that might interest you</p>
+                </div>
+            </div>
+            <div class="row g-4 justify-content-center">
+                @for (route of popularRoutes; track $index) {
+                <div class="col-lg-3 col-md-6">
+                    <div class="route-card text-center p-4 bg-white rounded-4 shadow-sm h-100 hover-lift cursor-pointer"
+                        (click)="navigateTo(route.route)">
+                        <div class="route-icon mb-3">
+                            <i class="{{route.icon}} text-primary fs-1"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">{{route.name}}</h5>
+                        <p class="text-muted small mb-0">Visit {{route.name.toLowerCase()}} page</p>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Suggestion Section -->
+    <section class="search-suggestion py-5 bg-gradient text-white">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="h3 fw-bold mb-3">Still can't find what you're looking for?</h2>
+                    <p class="lead mb-4">
+                        Our furniture collection is vast and beautiful. Try searching for specific items or browse our
+                        categories.
+                    </p>
+                    <div class="search-actions">
+                        <button class="btn btn-warning btn-lg px-5 py-3 me-3 rounded-pill"
+                            (click)="navigateTo('/products')">
+                            <i class="bi bi-search me-2"></i>Browse Products
+                        </button>
+                        <button class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill"
+                            (click)="navigateTo('/contact')">
+                            <i class="bi bi-headset me-2"></i>Get Help
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fun Facts Section -->
+    <section class="fun-facts py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h3 class="h4 fw-bold mb-4 text-primary">Did you know?</h3>
+                    <div class="row g-4">
+                        <div class="col-lg-4">
+                            <div class="fact-item p-3">
+                                <i class="bi bi-lightbulb text-warning fs-2 mb-2"></i>
+                                <p class="text-muted mb-0">
+                                    The first piece of furniture was probably a stone used as a seat around 30,000 years
+                                    ago!
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="fact-item p-3">
+                                <i class="bi bi-tree text-success fs-2 mb-2"></i>
+                                <p class="text-muted mb-0">
+                                    Oak furniture can last for hundreds of years with proper care - now that's
+                                    sustainability!
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="fact-item p-3">
+                                <i class="bi bi-palette text-info fs-2 mb-2"></i>
+                                <p class="text-muted mb-0">
+                                    The color of your furniture can affect your mood - choose wisely for your happy
+                                    space!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Message -->
+    <section class="error-footer py-4 bg-dark text-white">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <p class="mb-0">
+                        <i class="bi bi-heart-fill text-danger me-2"></i>
+                        Thanks for visiting our furniture store! We hope you find your way back to something amazing.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

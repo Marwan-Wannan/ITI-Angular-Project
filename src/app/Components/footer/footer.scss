@@ -1,0 +1,189 @@
+
+.modern-footer {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  margin-top: auto;
+  margin-left: auto;
+  width: 100%;
+  
+  .footer-main {
+    padding: 4rem 0 2rem;
+    
+    .footer-section {
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        
+        i {
+          color: #3498db;
+          font-size: 1.8rem;
+        }
+        
+        .brand-text {
+          font-size: 1.4rem;
+        }
+      }
+      
+      .footer-description {
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.6;
+        margin-bottom: 2rem;
+      }
+      
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        
+        .social-link {
+          width: 40px;
+          height: 40px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          
+          &:hover {
+            background: #3498db;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+          }
+          
+          i {
+            font-size: 1.1rem;
+          }
+        }
+      }
+      
+      .footer-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: white;
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: -0.5rem;
+          width: 30px;
+          height: 2px;
+          background: #3498db;
+        }
+      }
+      
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        
+        li {
+          margin-bottom: 0.75rem;
+          
+          a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            
+            &:hover {
+              color: #3498db;
+              padding-left: 10px;
+            }
+            
+            &::before {
+              content: '';
+              position: absolute;
+              left: -15px;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 0;
+              height: 2px;
+              background: #3498db;
+              transition: width 0.3s ease;
+            }
+            
+            &:hover::before {
+              width: 10px;
+            }
+          }
+        }
+      }
+      
+      .contact-info {
+        .contact-item {
+          display: flex;
+          align-items: flex-start;
+          margin-bottom: 1.5rem;
+          
+          i {
+            width: 20px;
+            color: #3498db;
+            margin-right: 1rem;
+            margin-top: 0.25rem;
+            font-size: 1.1rem;
+          }
+          
+          .contact-text {
+            display: flex;
+            flex-direction: column;
+            
+            span {
+              color: rgba(255, 255, 255, 0.8);
+              line-height: 1.4;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .footer-bottom {
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+    
+    .copyright {
+      p {
+        color: rgba(255, 255, 255, 0.6);
+        margin: 0;
+        font-size: 0.9rem;
+        
+        @media (max-width: 768px) {
+          text-align: center;
+          margin-bottom: 1rem;
+        }
+      }
+    }
+    
+    .footer-bottom-links {
+      display: flex;
+      justify-content: flex-end;
+      gap: 2rem;
+      
+      @media (max-width: 768px) {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      
+      a {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+        
+        &:hover {
+          color: #3498db;
+        }
+      }
+    }
+  }
+}

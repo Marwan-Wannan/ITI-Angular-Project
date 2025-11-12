@@ -1,0 +1,187 @@
+<div class="about-container">
+  <!-- Hero Section -->
+  <section class="about-hero py-5 bg-primary text-white">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h1 class="display-3 fw-bold mb-4">About Our Story</h1>
+          <p class="lead mb-4">
+            For over 25 years, we've been crafting exceptional furniture that transforms houses into homes. 
+            Our journey began with a simple belief: everyone deserves beautiful, quality furniture that stands the test of time.
+          </p>
+          <div class="hero-stats row text-center">
+            <div class="col-4">
+              <h3 class="fw-bold">25+</h3>
+              <p class="mb-0">Years</p>
+            </div>
+            <div class="col-4">
+              <h3 class="fw-bold">15K+</h3>
+              <p class="mb-0">Customers</p>
+            </div>
+            <div class="col-4">
+              <h3 class="fw-bold">500+</h3>
+              <p class="mb-0">Products</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=400&fit=crop" 
+               alt="Our Workshop" class="img-fluid rounded-4 shadow-lg">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision -->
+  <section class="mission-vision py-5 bg-light">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-6">
+          <div class="mission-card h-100 p-4 bg-white rounded-4 shadow-sm">
+            <div class="icon-wrapper mb-3">
+              <i class="bi bi-bullseye text-primary fs-1"></i>
+            </div>
+            <h2 class="h3 fw-bold mb-3 text-primary">Our Mission</h2>
+            <p class="text-muted">
+              To create exceptional furniture that enhances the way people live, work, and connect in their spaces. 
+              We strive to combine timeless design with modern functionality, ensuring every piece we create 
+              adds value and beauty to our customers' lives.
+            </p>
+            <p class="text-muted mb-0">
+              We believe furniture is more than just objects in a room – it's the foundation of memories, 
+              conversations, and moments that matter most.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="vision-card h-100 p-4 bg-white rounded-4 shadow-sm">
+            <div class="icon-wrapper mb-3">
+              <i class="bi bi-eye text-warning fs-1"></i>
+            </div>
+            <h2 class="h3 fw-bold mb-3 text-warning">Our Vision</h2>
+            <p class="text-muted">
+              To be the world's most trusted furniture brand, known for our commitment to quality, sustainability, 
+              and customer satisfaction. We envision a future where beautiful, well-crafted furniture is accessible 
+              to everyone, regardless of their budget or location.
+            </p>
+            <p class="text-muted mb-0">
+              We aim to lead the industry in sustainable practices while maintaining the highest standards of 
+              craftsmanship and design innovation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="values-section py-5">
+    <div class="container">
+      <div class="row text-center mb-5">
+        <div class="col-12">
+          <h2 class="display-5 fw-bold mb-3">Our Core Values</h2>
+          <p class="lead text-muted">The principles that guide everything we do</p>
+        </div>
+      </div>
+      <div class="row g-4">
+        @for (value of values; track $index) {
+          <div class="col-lg-3 col-md-6">
+            <div class="value-card text-center p-4 h-100 bg-white rounded-4 shadow-sm border-0 hover-lift">
+              <div class="value-icon mb-3">
+                <i class="{{value.icon}} text-primary fs-1"></i>
+              </div>
+              <h5 class="fw-bold mb-3">{{value.title}}</h5>
+              <p class="text-muted">{{value.description}}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section class="timeline-section py-5 bg-light">
+    <div class="container">
+      <div class="row text-center mb-5">
+        <div class="col-12">
+          <h2 class="display-5 fw-bold mb-3">Our Journey</h2>
+          <p class="lead text-muted">Key milestones in our company's history</p>
+        </div>
+      </div>
+      <div class="timeline">
+        @for (milestone of milestones; track $index; let isEven = $even) {
+          <div class="timeline-item" [class.timeline-item-right]="!isEven">
+            <div class="timeline-marker">
+              <div class="timeline-marker-inner"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-card p-4 bg-white rounded-4 shadow-sm">
+                <div class="timeline-year text-primary fw-bold fs-4 mb-2">{{milestone.year}}</div>
+                <h5 class="fw-bold mb-2">{{milestone.event}}</h5>
+                <p class="text-muted mb-0">{{milestone.description}}</p>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section py-5">
+    <div class="container">
+      <div class="row text-center mb-5">
+        <div class="col-12">
+          <h2 class="display-5 fw-bold mb-3">Meet Our Team</h2>
+          <p class="lead text-muted">The passionate people behind our success</p>
+        </div>
+      </div>
+      <div class="row g-4">
+        @for (member of teamMembers; track $index) {
+          <div class="col-lg-3 col-md-6">
+            <div class="team-card text-center p-4 bg-white rounded-4 shadow-sm border-0 h-100 hover-lift">
+              <div class="team-photo mb-3">
+                <img [src]="member.image" [alt]="member.name" 
+                     class="rounded-circle shadow" width="150" height="150">
+              </div>
+              <h5 class="fw-bold mb-1">{{member.name}}</h5>
+              <p class="text-primary fw-semibold mb-3">{{member.position}}</p>
+              <p class="text-muted small mb-3">{{member.bio}}</p>
+              <div class="team-social">
+                <a [href]="member.social.linkedin" class="btn btn-outline-primary btn-sm rounded-circle me-2">
+                  <i class="bi bi-linkedin"></i>
+                </a>
+                <a [href]="member.social.twitter" class="btn btn-outline-primary btn-sm rounded-circle me-2">
+                  <i class="bi bi-twitter"></i>
+                </a>
+                <a [href]="'mailto:' + member.social.email" class="btn btn-outline-primary btn-sm rounded-circle">
+                  <i class="bi bi-envelope"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section py-5 bg-dark text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-12">
+          <h2 class="display-5 fw-bold mb-3">Ready to Experience the Difference?</h2>
+          <p class="lead mb-4">Join thousands of satisfied customers who have transformed their spaces with our furniture</p>
+          <div class="cta-buttons">
+            <button class="btn btn-warning btn-lg px-5 py-3 rounded-pill me-3">
+              <i class="bi bi-bag-heart me-2"></i>Shop Our Collection
+            </button>
+            <button class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">
+              <i class="bi bi-telephone me-2"></i>Contact Us
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
